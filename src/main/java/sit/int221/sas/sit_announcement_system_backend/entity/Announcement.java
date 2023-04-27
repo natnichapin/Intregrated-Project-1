@@ -20,9 +20,9 @@ public class Announcement {
     private Integer id ;
     private String announcementTitle;
     private String announcementDescription;
-//    @ManyToOne
-//    @JoinColumn(name="announcementCategory")
-    private Integer announcementCategory ;
+    @ManyToOne
+    @JoinColumn(name="announcementCategory")
+    private Category announcementCategory ;
     private Date publishDate ;
     private Date closeDate ;
     //แปลง String จาก DB ไดิ

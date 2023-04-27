@@ -17,6 +17,10 @@ public class AnnouncementsDTO {
     private Date closeDate ;
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay ;
-    private Integer announcementCategory ;
+
+    private String announcementCategory ;
+
+
+
 
 }
