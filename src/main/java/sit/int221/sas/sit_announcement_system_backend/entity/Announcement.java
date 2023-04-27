@@ -1,5 +1,6 @@
 package sit.int221.sas.sit_announcement_system_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +22,10 @@ public class Announcement {
     private String announcementTitle;
     private String announcementDescription;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="announcementCategory")
     private Category announcementCategory ;
+
     private Date publishDate ;
     private Date closeDate ;
     //แปลง String จาก DB ไดิ

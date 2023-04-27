@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsDTO;
+import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncmentsDetailDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.service.AnnouncementService;
 import sit.int221.sas.sit_announcement_system_backend.utils.ListMapper;
@@ -29,8 +30,8 @@ public class AnnouncementController {
     }
 
     @GetMapping("/{id}")
-    public Announcement getAnnouncementById(@PathVariable Integer id){
-        return announcementService.getAnnouncementById(id) ;
+    public AnnouncmentsDetailDTO getAnnouncementById(@PathVariable Integer id){
+        return modelMapper.map(announcementService.getAnnouncementById(id), AnnouncmentsDetailDTO.class)   ;
     }
 
 }
