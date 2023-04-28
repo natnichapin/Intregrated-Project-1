@@ -11,16 +11,14 @@ import java.util.Date;
 @Getter
 @Setter
 public class AnnouncementsDTO {
-    private Integer id ;
+    private Integer id;
     private String announcementTitle;
-    private Date publishDate ;
-    private Date closeDate ;
+    private Date publishDate;
+    private Date closeDate;
     @Enumerated(EnumType.STRING)
-    private AnnouncementDisplay announcementDisplay ;
+    private AnnouncementDisplay announcementDisplay;
 
-    private String announcementCategory ;
-
-
+    private String announcementCategory;
 
 
 }

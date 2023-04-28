@@ -5,6 +5,6 @@ import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 
 import java.util.List;
 
-public interface AnnouncementRepository extends JpaRepository<Announcement,Integer> {
-    List<Announcement> findAllByOrderByIdDesc () ;
+public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
+    List<Announcement> findAllByOrderByIdDesc();
 }

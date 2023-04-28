@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class AnnouncementService {
     @Autowired
-    private AnnouncementRepository announcementRepository ;
+    private AnnouncementRepository announcementRepository;
 
-    public List<Announcement> getAnnouncements(){
-        return announcementRepository.findAllByOrderByIdDesc() ;
+    public List<Announcement> getAnnouncements() {
+        return announcementRepository.findAllByOrderByIdDesc();
     }
 
-    public Announcement getAnnouncementById(Integer announcementid){
-        return announcementRepository.findById(announcementid).orElseThrow(()->new RuntimeException(announcementid+ " do not exist!."));
+    public Announcement getAnnouncementById(Integer announcementid) {
+        return announcementRepository.findById(announcementid).orElseThrow(() -> new RuntimeException(announcementid + " do not exist!."));
     }
 
 }

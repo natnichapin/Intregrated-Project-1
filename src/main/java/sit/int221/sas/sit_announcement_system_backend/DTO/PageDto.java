@@ -21,6 +21,7 @@ public class PageDto<T> {
     private Integer size;
     @JsonIgnore
     private Integer number;
+
     public Integer getPage() {
         return number;
     }

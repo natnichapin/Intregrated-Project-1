@@ -18,19 +18,19 @@ import java.util.Date;
 @Table(name = "announcement")
 public class Announcement {
     @Id
-    private Integer id ;
+    private Integer id;
     private String announcementTitle;
     private String announcementDescription;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="announcementCategory")
-    private Category announcementCategory ;
+    @JoinColumn(name = "announcementCategory")
+    private Category announcementCategory;
 
-    private Date publishDate ;
-    private Date closeDate ;
+    private Date publishDate;
+    private Date closeDate;
     //แปลง String จาก DB ไดิ
     @Enumerated(EnumType.STRING)
-    private AnnouncementDisplay announcementDisplay ;
+    private AnnouncementDisplay announcementDisplay;
 
 
 }
