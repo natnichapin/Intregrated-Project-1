@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,8 +14,8 @@ import java.util.Date;
 public class AnnouncementsDTO {
     private Integer id;
     private String announcementTitle;
-    private Date publishDate;
-    private Date closeDate;
+    private ZonedDateTime publishDate;
+    private ZonedDateTime closeDate;
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
 

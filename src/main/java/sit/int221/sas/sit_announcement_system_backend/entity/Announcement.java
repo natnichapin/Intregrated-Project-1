@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Entity
@@ -26,8 +27,8 @@ public class Announcement {
     @JoinColumn(name = "announcementCategory")
     private Category announcementCategory;
 
-    private Date publishDate;
-    private Date closeDate;
+    private ZonedDateTime publishDate;
+    private ZonedDateTime closeDate;
     //แปลง String จาก DB ไดิ
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
