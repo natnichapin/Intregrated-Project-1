@@ -11,11 +11,12 @@ import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncmentsDetailDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.service.AnnouncementService;
 import sit.int221.sas.sit_announcement_system_backend.utils.ListMapper;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 @RestController
 @RequestMapping("/kw1/api/announcements")
+@CrossOrigin
 public class AnnouncementController {
     @Autowired
     private ListMapper listMapper ;
