@@ -9,7 +9,6 @@ import lombok.Setter;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -22,10 +21,17 @@ public class Announcement {
     private Integer id;
     private String announcementTitle;
     private String announcementDescription;
+
+
+
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "announcementCategory")
-    private Category announcementCategory;
+    private Category AnnouncementCategory;
+
+//    public String getAnnouncementCategory(){
+//        return category.getCategoryName();
+//    }
+
 
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
