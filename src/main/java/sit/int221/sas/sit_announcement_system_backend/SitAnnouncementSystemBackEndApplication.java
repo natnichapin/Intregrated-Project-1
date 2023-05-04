@@ -10,4 +10,5 @@ public class SitAnnouncementSystemBackEndApplication {
         SpringApplication.run(SitAnnouncementSystemBackEndApplication.class, args);
     }
 
+
 }

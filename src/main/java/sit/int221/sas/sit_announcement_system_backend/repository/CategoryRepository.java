@@ -5,4 +5,5 @@ import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.entity.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
+//    Category findCategoryByCategoryName(String name);
 }

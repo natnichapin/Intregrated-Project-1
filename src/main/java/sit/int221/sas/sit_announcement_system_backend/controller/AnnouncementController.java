@@ -2,9 +2,11 @@ package sit.int221.sas.sit_announcement_system_backend.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsDTO;
-import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncmentsDetailDTO;
+import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsResponseDTO;
+import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncmentsResponseDetailDTO;
 import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncmentsRequestDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.service.AnnouncementService;
@@ -24,18 +26,18 @@ public class AnnouncementController {
     private AnnouncementService announcementService;
 
     @GetMapping("")
-    public List<AnnouncementsDTO> getAnnouncements() {
-        return listMapper.mapList(announcementService.getAnnouncements(), AnnouncementsDTO.class, modelMapper);
+    public ResponseEntity<List<AnnouncementsResponseDTO>> getAnnouncements() {
+        return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(), AnnouncementsResponseDTO.class, modelMapper));
     }
 
     @GetMapping("/{id}")
-    public AnnouncmentsDetailDTO getAnnouncementById(@PathVariable Integer id) {
-        return modelMapper.map(announcementService.getAnnouncementById(id), AnnouncmentsDetailDTO.class);
+    public ResponseEntity<AnnouncmentsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.getAnnouncementById(id), AnnouncmentsResponseDetailDTO.class));
     }
     @PostMapping("")
-    public Announcement createAnnouncement(@RequestBody AnnouncmentsRequestDTO announcementDTO){
+    public ResponseEntity<Announcement> createAnnouncement(@RequestBody AnnouncmentsRequestDTO announcementDTO){
 
-        return  announcementService.createAnnoucement(announcementDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(announcementService.createAnnoucement(announcementDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -44,8 +46,9 @@ public class AnnouncementController {
     }
 
     @PutMapping("/{id}")
-    public Announcement updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncmentsRequestDTO announcment){
-        return  announcementService.updateAnnouncement(id,announcment);
+    public ResponseEntity<Announcement> updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncmentsRequestDTO announcment){
+        return  ResponseEntity.status(HttpStatus.OK).body(announcementService.updateAnnouncement(id,announcment));
+
     }
 
 }

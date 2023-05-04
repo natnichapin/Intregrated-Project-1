@@ -2,19 +2,15 @@ package sit.int221.sas.sit_announcement_system_backend.DTO;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import sit.int221.sas.sit_announcement_system_backend.entity.Category;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
-public class AnnouncementsDTO {
+public class AnnouncementsResponseDTO {
     private Integer id;
     private String announcementTitle;
     private ZonedDateTime publishDate;

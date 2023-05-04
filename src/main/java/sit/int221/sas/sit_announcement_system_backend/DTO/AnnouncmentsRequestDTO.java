@@ -10,13 +10,15 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 public class AnnouncmentsRequestDTO {
-    private Integer id;
+    @Column(name="announcementTitle", nullable = false)
     private String announcementTitle;
-    private String announcementDescription;
-    private Integer announcementCategory;
+    @Column(name="announcementDescription", nullable = false)
+    private String announcementDescription ;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
     //แปลง String จาก DB ไดิ
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
+    @Column(name="announcementCategory", nullable = false)
+    private Integer announcementCategory;
 }
