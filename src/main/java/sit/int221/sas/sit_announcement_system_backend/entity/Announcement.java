@@ -29,18 +29,18 @@ public class Announcement {
 
 
     @ManyToOne
-    @JoinColumn(name = "announcementCategory",nullable = false)
+    @JoinColumn(name = "announcementCategory",nullable =false)
     private Category AnnouncementCategory;
 //    public String getAnnouncementCategory(){
 //        return category.getCategoryName();
 //    }
-    @Column(name="publishDate", nullable = false)
+    @Column(name="publishDate", nullable = true)
     private ZonedDateTime publishDate;
-    @Column(name="closeDate", nullable = false)
+    @Column(name="closeDate", nullable = true)
     private ZonedDateTime closeDate;
     //แปลง String จาก DB ได้
 
-    @Column(name="announcementDisplay", nullable = false)
+    @Column(name="announcementDisplay", nullable = true)
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
     public Announcement() {
