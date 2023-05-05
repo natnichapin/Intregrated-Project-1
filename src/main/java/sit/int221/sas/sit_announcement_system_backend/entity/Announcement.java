@@ -22,9 +22,9 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable = false)
     private Integer id;
-    @Column(name="announcementTitle", nullable = false)
+    @Column(name="announcementTitle", nullable = false,length = 200)
     private String announcementTitle;
-    @Column(name="announcementDescription", nullable = false)
+    @Column(name="announcementDescription", nullable = false,length = 1000)
     private String announcementDescription;
 
 

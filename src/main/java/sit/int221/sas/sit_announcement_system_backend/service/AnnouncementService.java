@@ -1,18 +1,10 @@
 package sit.int221.sas.sit_announcement_system_backend.service;
 
-import org.hibernate.annotations.NotFound;
-import org.modelmapper.ValidationException;
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.server.ResponseStatusException;
-import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncmentsRequestDTO;
+import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsRequestDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.repository.AnnouncementRepository;
 import sit.int221.sas.sit_announcement_system_backend.repository.CategoryRepository;
@@ -33,7 +25,7 @@ public class AnnouncementService {
     public Announcement getAnnouncementById(Integer announcementid) {
         return announcementRepository.findById(announcementid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Announcement id"+announcementid+ " does not exist"));
     }
-    public Announcement createAnnoucement(AnnouncmentsRequestDTO announcementDTO){
+    public Announcement createAnnoucement(AnnouncementsRequestDTO announcementDTO){
         Announcement announcement = new Announcement();
         return getAnnouncement(announcementDTO, announcement);
     }
@@ -44,7 +36,7 @@ public class AnnouncementService {
     }
 
 
-    public Announcement updateAnnouncement(Integer id,AnnouncmentsRequestDTO announcement) {
+    public Announcement updateAnnouncement(Integer id, AnnouncementsRequestDTO announcement) {
         try {
             Announcement existAnnouncement = announcementRepository.findById(id).orElseThrow(
                     ()->new   ResponseStatusException(HttpStatus.NOT_FOUND,"Announcement id" +id + " does not exist, Can not update !"));
@@ -57,7 +49,7 @@ public class AnnouncementService {
 
     }
 
-    private Announcement getAnnouncement(AnnouncmentsRequestDTO announcement, Announcement RealAnnouncement) {
+    private Announcement getAnnouncement(AnnouncementsRequestDTO announcement, Announcement RealAnnouncement) {
         RealAnnouncement.setAnnouncementTitle(announcement.getAnnouncementTitle());
         RealAnnouncement.setAnnouncementDescription(announcement.getAnnouncementDescription());
         RealAnnouncement.setPublishDate(announcement.getPublishDate());
@@ -65,7 +57,7 @@ public class AnnouncementService {
         if(announcement.getAnnouncementDisplay()!=null){
             RealAnnouncement.setAnnouncementDisplay(announcement.getAnnouncementDisplay());
         }
-        RealAnnouncement.setAnnouncementCategory(categoryRepository.findById(announcement.getAnnouncementCategory()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Category id" +announcement.getAnnouncementCategory()+" does not exist, Can not update !")));
+        RealAnnouncement.setAnnouncementCategory(categoryRepository.findById(announcement.getCategoryId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Category id" +announcement.getCategoryId()+" does not exist, Can not update !")));
         return  announcementRepository.saveAndFlush(RealAnnouncement);
     }
 

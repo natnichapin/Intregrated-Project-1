@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 
 @Getter
 @Setter
-public class AnnouncmentsResponseDetailDTO {
+public class AnnouncementsResponseDetailDTO {
     private Integer id;
     private String announcementTitle;
     private String announcementDescription;

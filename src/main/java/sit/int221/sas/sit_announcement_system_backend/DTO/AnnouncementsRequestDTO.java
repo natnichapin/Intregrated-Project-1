@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 
 @Getter
 @Setter
-public class AnnouncmentsRequestDTO {
+public class AnnouncementsRequestDTO {
     @Column(name="announcementTitle", nullable = false)
     private String announcementTitle;
     @Column(name="announcementDescription", nullable = false)
@@ -24,5 +24,5 @@ public class AnnouncmentsRequestDTO {
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
     @Column(name="announcementCategory", nullable = false)
-    private Integer announcementCategory;
+    private Integer categoryId ;
 }
