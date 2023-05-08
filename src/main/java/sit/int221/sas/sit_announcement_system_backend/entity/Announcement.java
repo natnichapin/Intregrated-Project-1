@@ -18,6 +18,7 @@ import java.time.ZonedDateTime;
 
 @Table(name = "announcement")
 public class Announcement {
+    //อาจจะทำให้ไอดี nullable = true ก็ใช้ได้
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable = false)
