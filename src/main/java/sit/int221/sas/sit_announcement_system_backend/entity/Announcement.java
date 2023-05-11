@@ -28,7 +28,7 @@ public class Announcement {
     private Integer id;
     @Column(name="announcementTitle", nullable = false,length = 200)
     private String announcementTitle;
-    @Column(name="announcementDescription", nullable = false,length = 1000)
+    @Column(name="announcementDescription", nullable = false,length = 10000)
     private String announcementDescription;
 
 

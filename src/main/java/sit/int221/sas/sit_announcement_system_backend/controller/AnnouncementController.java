@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/announcements")
 @CrossOrigin
-public class AnnouncementController {
+public class AnnouncementController<T> {
     @Autowired
     private ListMapper listMapper;
     @Autowired
@@ -24,20 +24,39 @@ public class AnnouncementController {
     private AnnouncementService announcementService;
 
     @GetMapping("")
-    public ResponseEntity<List<AnnouncementsResponseDTO>> getAnnouncements(@RequestParam (required = false) String mode ) {
-        return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode),AnnouncementsResponseDTO.class, modelMapper));
+    public ResponseEntity<List<T>> getAnnouncements(@RequestParam (required = false) String mode ) {
+        if( mode != null){
+            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ){
+                return ResponseEntity.status(HttpStatus.OK).body((List<T>) listMapper.mapList(announcementService.getAnnouncements(mode),UserAnnouncementsResponseDTO.class, modelMapper));
+            }
+            throw new RuntimeException();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.OK).body((List<T>) listMapper.mapList(announcementService.getAnnouncements(mode),AnnouncementsResponseDTO.class, modelMapper));
+        }
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnnouncementsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id) {
+    public ResponseEntity<AnnouncementsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id,) {
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.getAnnouncementById(id),AnnouncementsResponseDetailDTO.class));
     }
     @GetMapping("/pages")
-    public PageDto getAnnouncementPage (@RequestParam (defaultValue = "0")Integer page,
+    public ResponseEntity<PageDto> getAnnouncementPage (@RequestParam (defaultValue = "0")Integer page,
                                         @RequestParam (defaultValue = "5") Integer pageSize,
                                         @RequestParam (required = false) String mode,
                                         @RequestParam (required = false) Integer id){
-        return  listMapper.toPageDTO(announcementService.getPages(page,pageSize,mode,id),AnnouncementsResponseDTO.class,modelMapper );
+        if( mode != null ){
+            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ) {
+                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), UserAnnouncementsResponseDTO.class, modelMapper));
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), AnnouncementsResponseDTO.class, modelMapper));
+            }
+            }
+        else {
+            return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), AnnouncementsResponseDTO.class, modelMapper));
+        }
     }
 
 

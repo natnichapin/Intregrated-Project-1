@@ -32,46 +32,19 @@ public class AnnouncementService {
     private CategoryRepository categoryRepository;
 
     public List<Announcement> getAnnouncements(String mode) {
-
-        if(mode != null){
-            if(mode.toLowerCase().equals("active") || mode.toLowerCase().equals("close")){
-                List<Announcement> announcements =    announcementRepository.findByAnnouncementDisplayOrderByIdDesc(AnnouncementDisplay.Y);
-                Iterator<Announcement> iterator = announcements.iterator();
-                if(mode.toLowerCase().equals("active")) {
-                    while (iterator.hasNext()) {
-                            Announcement announcement = iterator.next();
-                            if (announcement.getCloseDate() != null) {
-                                if (Instant.now().isAfter(announcement.getCloseDate().toInstant())) {
-                                    iterator.remove();
-                                }
-                            }
-                            if (announcement.getPublishDate() != null) {
-                                if (Instant.now().isBefore(announcement.getPublishDate().toInstant())) {
-                                    iterator.remove();
-                                    }
-                                }
-                            }
-                        }
-                    else {
-                    while (iterator.hasNext()) {
-                            Announcement announcement = iterator.next();
-                            if(announcement.getCloseDate() == null){
-                                iterator.remove();
-                            }
-                            if (announcement.getCloseDate() != null &&!Instant.now().isAfter(announcement.getCloseDate().toInstant())) {
-                                iterator.remove();
-                            }
-                        }
-                    }
-                return announcements;
-            }
-            else {
-                return announcementRepository.findByAnnouncementDisplayOrderByIdDesc(AnnouncementDisplay.N);
+        LocalDateTime localNow = LocalDateTime.now();
+        if( mode != null) {
+            if (mode.toLowerCase().equals("active")) {
+                return announcementRepository.findAnnouncementByValidateDatetimeList(localNow.atZone(ZoneId.of("UTC")));
+            } else {
+                return announcementRepository.findAnnouncementByCloseDateAfterNowList(localNow.atZone(ZoneId.of("UTC")));
             }
         }
         else {
-            return announcementRepository.findAllByOrderByIdDesc();
+           return    announcementRepository.findAllByOrderByIdDesc();
         }
+
+
     }
 
 
@@ -119,14 +92,12 @@ public class AnnouncementService {
         Pageable pageable = PageRequest.of(page,pageSize);
         LocalDateTime localNow = LocalDateTime.now();
         if( id != null && mode != null){
-
             if(mode.toLowerCase().equals("active")){
                 return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable);
             }
             else {
                 return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable) ;
             }
-
         }
        else if(id != null && mode==null) {
             return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(id,pageable) ;
@@ -138,7 +109,6 @@ public class AnnouncementService {
            else {
                return  announcementRepository.findAnnouncementByCloseDateAfterNowPage(localNow.atZone(ZoneId.of("UTC")),pageable);
            }
-
         }
         else{
             return announcementRepository.findAll(pageable);
@@ -149,3 +119,43 @@ public class AnnouncementService {
 }
 
 
+
+// if(mode != null){
+//         if(mode.toLowerCase().equals("active") || mode.toLowerCase().equals("close")){
+//         List<Announcement> announcements =    announcementRepository.findByAnnouncementDisplayOrderByIdDesc(AnnouncementDisplay.Y);
+//        Iterator<Announcement> iterator = announcements.iterator();
+//        if(mode.toLowerCase().equals("active")) {
+//        while (iterator.hasNext()) {
+//        Announcement announcement = iterator.next();
+//        if (announcement.getCloseDate() != null) {
+//        if (Instant.now().isAfter(announcement.getCloseDate().toInstant())) {
+//        iterator.remove();
+//        }
+//        }
+//        if (announcement.getPublishDate() != null) {
+//        if (Instant.now().isBefore(announcement.getPublishDate().toInstant())) {
+//        iterator.remove();
+//        }
+//        }
+//        }
+//        }
+//        else {
+//        while (iterator.hasNext()) {
+//        Announcement announcement = iterator.next();
+//        if(announcement.getCloseDate() == null){
+//        iterator.remove();
+//        }
+//        if (announcement.getCloseDate() != null &&!Instant.now().isAfter(announcement.getCloseDate().toInstant())) {
+//        iterator.remove();
+//        }
+//        }
+//        }
+//        return announcements;
+//        }
+//        else {
+//        return announcementRepository.findByAnnouncementDisplayOrderByIdDesc(AnnouncementDisplay.N);
+//        }
+//        }
+//        else {
+//        return announcementRepository.findAllByOrderByIdDesc();
+//        }

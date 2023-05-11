@@ -13,8 +13,7 @@ import java.time.ZonedDateTime;
 public class UserAnnouncementsResponseDetailDTO {
     private Integer id;
     private String announcementTitle;
-    private ZonedDateTime publishDate;
+    private String announcementDescription ;
     private ZonedDateTime closeDate;
-
     private String announcementCategory;
 }
