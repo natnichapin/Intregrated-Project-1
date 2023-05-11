@@ -16,8 +16,9 @@ import java.util.List;
 
 public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
     //ธรรมดา
-    @Query(value = "SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y' AND (:now >= a.publishDate OR  :now < a.closeDate) ORDER BY a.id DESC ")
+    @Query(value = "SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y' AND ((a.publishDate IS NULL OR :now >= a.publishDate) AND (a.closeDate IS NULL OR :now < a.closeDate)) ORDER BY a.id DESC ")
     List<Announcement> findAnnouncementByValidateDatetimeList(@Param("now") ZonedDateTime now) ;
+
 
 
 
@@ -27,7 +28,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
     //PAGE
 
     //ไม่มี ID
-    @Query(value = "SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y'AND (  :now >= a.publishDate OR  :now < a.closeDate ) ORDER BY a.id DESC ")
+    @Query(value = "SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y'AND ((a.publishDate IS NULL OR  :now >= a.publishDate) AND ( a.closeDate IS NULL OR :now < a.closeDate )) ORDER BY a.id DESC ")
     Page<Announcement> findAnnouncementByValidateDatetimePage(@Param("now")ZonedDateTime now, Pageable pageable) ;
 
     @Query(value ="SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y'AND ( :now >= a.closeDate) ORDER BY a.id DESC ")
@@ -36,7 +37,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 
 
     // มี ID
-    @Query(value = "SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y'AND (  :now >= a.publishDate OR  :now < a.closeDate  AND a.announcementCategory.categoryId = :id ) ORDER BY a.id DESC ")
+    @Query(value = "SELECT a FROM Announcement a WHERE  a.announcementDisplay='Y'AND ( ((a.publishDate IS NULL OR :now >= a.publishDate) AND (a.closeDate IS NULL OR :now < a.closeDate)) AND a.announcementCategory.categoryId = :id ) ORDER BY a.id DESC ")
     Page<Announcement> findAnnouncementByValidateDatetimePageWithId(@Param("now")ZonedDateTime now, @Param("id")Integer id, Pageable pageable) ;
 
 

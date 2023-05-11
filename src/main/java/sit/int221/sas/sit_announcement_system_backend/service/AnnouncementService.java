@@ -121,7 +121,7 @@ public class AnnouncementService {
         if( id != null && mode != null){
 
             if(mode.toLowerCase().equals("active")){
-                return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable);
+                return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable);
             }
             else {
                 return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable) ;
