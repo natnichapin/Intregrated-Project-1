@@ -24,7 +24,20 @@ public class AnnouncementController<T> {
     private AnnouncementService announcementService;
 
     @GetMapping("")
-    public ResponseEntity<List<T>> getAnnouncements(@RequestParam (required = false) String mode ) {
+    public ResponseEntity<List<AnnouncementsResponseDTO>> getAnnouncements(@RequestParam (required = false) String mode ) {
+        if( mode != null){
+            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ){
+                return ResponseEntity.status(HttpStatus.OK).body( listMapper.mapList(announcementService.getAnnouncements(mode),AnnouncementsResponseDTO.class, modelMapper));
+            }
+            throw new RuntimeException();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode),AnnouncementsResponseDTO.class, modelMapper));
+        }
+
+    }
+
+   /* public ResponseEntity<List<T>> getAnnouncements(@RequestParam (required = false) String mode ) {
         if( mode != null){
             if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ){
                 return ResponseEntity.status(HttpStatus.OK).body((List<T>) listMapper.mapList(announcementService.getAnnouncements(mode),UserAnnouncementsResponseDTO.class, modelMapper));
@@ -35,10 +48,10 @@ public class AnnouncementController<T> {
             return ResponseEntity.status(HttpStatus.OK).body((List<T>) listMapper.mapList(announcementService.getAnnouncements(mode),AnnouncementsResponseDTO.class, modelMapper));
         }
 
-    }
+    }*/
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnnouncementsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id,) {
+    public ResponseEntity<AnnouncementsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.getAnnouncementById(id),AnnouncementsResponseDetailDTO.class));
     }
     @GetMapping("/pages")
