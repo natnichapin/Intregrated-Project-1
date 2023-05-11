@@ -10,6 +10,9 @@ import org.hibernate.annotations.ColumnDefault;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,7 +34,7 @@ public class Announcement {
 
     @ManyToOne
     @JoinColumn(name = "announcementCategory",nullable =false)
-    private Category AnnouncementCategory;
+    private Category announcementCategory ;
 //    public String getAnnouncementCategory(){
 //        return category.getCategoryName();
 //    }
@@ -47,4 +50,6 @@ public class Announcement {
     public Announcement() {
         this.announcementDisplay = AnnouncementDisplay.N;
     }
+
+
 }

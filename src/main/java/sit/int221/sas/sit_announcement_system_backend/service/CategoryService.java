@@ -12,13 +12,16 @@ import java.util.List;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
-    @GetMapping("")
+
     public List<Category> getCategories() {
         return categoryRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Integer id) {
+    public Category getCategoryById(Integer id) {
         return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found with id " + id));
+    }
+
+    public Category addCategory(Category category){
+        return categoryRepository.saveAndFlush(category);
     }
 }

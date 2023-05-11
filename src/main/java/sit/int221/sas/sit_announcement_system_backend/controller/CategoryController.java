@@ -23,4 +23,9 @@ public class CategoryController {
     public Category getCategoryById(@PathVariable Integer id) {
         return categoryService.getCategoryById(id);
     }
+
+    @PostMapping("")
+    private Category addCategory(@RequestBody Category category){
+        return  categoryService.addCategory(category);
+    }
 }

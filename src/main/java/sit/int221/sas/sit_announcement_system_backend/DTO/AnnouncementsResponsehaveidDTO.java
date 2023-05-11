@@ -26,7 +26,7 @@ public class AnnouncementsResponsehaveidDTO {
     @Column(name="announcementCategory")
     private Category category ;
     public Integer getCategoryId(){
-        return category.getCategory_Id();
+        return category.getCategoryId();
     }
     public String getAnnouncementCategory(){
         return category.getCategoryName() ;
