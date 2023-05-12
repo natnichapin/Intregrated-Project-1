@@ -1,13 +1,8 @@
 package sit.int221.sas.sit_announcement_system_backend.DTO;
 
-<<<<<<< HEAD
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-=======
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
->>>>>>> ca1204e0052e689cb664da30145fb2da4b03dc8e
 import lombok.Getter;
 import lombok.Setter;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;

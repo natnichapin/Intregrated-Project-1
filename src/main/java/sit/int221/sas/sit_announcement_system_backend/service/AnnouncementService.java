@@ -11,7 +11,7 @@ import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsRequestDT
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.repository.AnnouncementRepository;
 import sit.int221.sas.sit_announcement_system_backend.repository.CategoryRepository;
-<<<<<<< HEAD
+
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -20,18 +20,6 @@ import java.util.*;
 @Service
 public class AnnouncementService {
 
-=======
-import sit.int221.sas.sit_announcement_system_backend.repository.PagingAnnouncementRepository;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.List;
-
-@Service
-public class AnnouncementService {
-    @Autowired
-    private PagingAnnouncementRepository pagingAnnouncementRepository;
->>>>>>> ca1204e0052e689cb664da30145fb2da4b03dc8e
     @Autowired
     private AnnouncementRepository announcementRepository;
     @Autowired
@@ -93,7 +81,7 @@ public class AnnouncementService {
     }
 
 
-<<<<<<< HEAD
+
     public Page<Announcement> getPages(Integer page, Integer size,String mode,Integer category){
         Pageable pageable = PageRequest.of(page,size);
         LocalDateTime localNow = LocalDateTime.now();
@@ -117,26 +105,7 @@ public class AnnouncementService {
            }
         }
         else{
-=======
-    public Page<Announcement> getPages(Integer page, Integer pageSize, String mode, Integer id) {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        LocalDateTime localNow = LocalDateTime.now();
-        if (id != null && mode != null) {
-            if (mode.equalsIgnoreCase("active")) {
-                return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")), id, pageable);
-            } else {
-                return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")), id, pageable);
-            }
-        } else if (id != null && mode == null) {
-            return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(id, pageable);
-        } else if (id == null && mode != null) {
-            if (mode.equalsIgnoreCase("active")) {
-                return announcementRepository.findAnnouncementByValidateDatetimePage(localNow.atZone(ZoneId.of("UTC")), pageable);
-            } else {
-                return announcementRepository.findAnnouncementByCloseDateAfterNowPage(localNow.atZone(ZoneId.of("UTC")), pageable);
-            }
-        } else {
->>>>>>> ca1204e0052e689cb664da30145fb2da4b03dc8e
+
             return announcementRepository.findAll(pageable);
         }
 
