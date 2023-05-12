@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -25,5 +23,5 @@ public class Category {
 
     @JsonIgnore
     @OneToMany(mappedBy = "announcementCategory")
-    private List<Announcement> announcements ;
+    private List<Announcement> announcements;
 }

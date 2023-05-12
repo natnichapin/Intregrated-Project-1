@@ -1,10 +1,7 @@
 package sit.int221.sas.sit_announcement_system_backend.DTO;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
-import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
 import java.time.ZonedDateTime;
 
@@ -13,7 +10,7 @@ import java.time.ZonedDateTime;
 public class UserAnnouncementsResponseDetailDTO {
     private Integer id;
     private String announcementTitle;
-    private String announcementDescription ;
+    private String announcementDescription;
     private ZonedDateTime closeDate;
     private String announcementCategory;
 }
