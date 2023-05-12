@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sit.int221.sas.sit_announcement_system_backend.DTO.*;
 import sit.int221.sas.sit_announcement_system_backend.service.AnnouncementService;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/announcements")
 @CrossOrigin
+@Validated
 public class AnnouncementController<T> {
     @Autowired
     private ListMapper listMapper;
@@ -27,11 +29,8 @@ public class AnnouncementController<T> {
 
     @GetMapping("")
     public ResponseEntity<List<AnnouncementsResponseDTO>> getAnnouncements(@RequestParam(required = false) String mode) {
-        if (mode != null) {
-            if (mode.equalsIgnoreCase("active") || mode.equalsIgnoreCase("closed")) {
+        if (mode != null && (mode.equalsIgnoreCase("active") || mode.equalsIgnoreCase("close"))) {
                 return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode), AnnouncementsResponseDTO.class, modelMapper));
-            }
-            throw new RuntimeException();
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode), AnnouncementsResponseDTO.class, modelMapper));
         }
@@ -58,8 +57,8 @@ public class AnnouncementController<T> {
 
     @GetMapping("/pages")
 
-    public ResponseEntity<PageDto> getAnnouncementPage (@RequestParam (defaultValue = "0")Integer page,
-                                        @RequestParam (defaultValue = "5") Integer size,
+    public ResponseEntity<PageDto> getAnnouncementPage (@RequestParam (required = false)Integer page,
+                                        @RequestParam (required = false) Integer size,
                                         @RequestParam (required = false) String mode,
                                         @RequestParam (required = false) Integer category){
         if( mode != null ){

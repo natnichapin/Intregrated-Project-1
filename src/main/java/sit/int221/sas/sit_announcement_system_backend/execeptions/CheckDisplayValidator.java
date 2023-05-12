@@ -1,0 +1,19 @@
+package sit.int221.sas.sit_announcement_system_backend.execeptions;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsRequestDTO;
+import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
+
+public class CheckDisplayValidator implements ConstraintValidator<CheckDisplay, String> {
+
+    @Override
+    public void initialize(CheckDisplay constraintAnnotation) {
+
+    }
+
+    @Override
+    public boolean isValid(String getAnnouncementDisplay, ConstraintValidatorContext context) {
+        return (getAnnouncementDisplay.equals(AnnouncementDisplay.N.toString()))|| (getAnnouncementDisplay.equals(AnnouncementDisplay.Y.toString())) ;
+    }
+}

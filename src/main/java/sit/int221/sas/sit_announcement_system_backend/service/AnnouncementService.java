@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
+import static org.hibernate.Hibernate.size;
+
 @Service
 public class AnnouncementService {
 
@@ -30,8 +32,10 @@ public class AnnouncementService {
         if (mode != null) {
             if (mode.equalsIgnoreCase("active")) {
                 return announcementRepository.findAnnouncementByValidateDatetimeList(localNow.atZone(ZoneId.of("UTC")));
-            } else {
+            } else if (mode.equalsIgnoreCase("close"))  {
                 return announcementRepository.findAnnouncementByCloseDateAfterNowList(localNow.atZone(ZoneId.of("UTC")));
+            } else {
+                throw new  ResponseStatusException(HttpStatus.NOT_FOUND,"Not Found : "+mode+" mode .");
             }
         } else {
             return announcementRepository.findAllByOrderByIdDesc();
@@ -42,7 +46,7 @@ public class AnnouncementService {
 
 
     public Announcement getAnnouncementById(Integer announcementid) {
-        return announcementRepository.findById(announcementid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id" + announcementid + " does not exist"));
+        return announcementRepository.findById(announcementid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id " + announcementid + " does not exist"));
     }
 
     public Announcement createAnnoucement(AnnouncementsRequestDTO announcementDTO) {
@@ -51,7 +55,7 @@ public class AnnouncementService {
     }
 
     public void deleteAnnouncement(Integer id) {
-        announcementRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, " Announcement id" + id + " does not exist, Can not delete !"));
+        announcementRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, " Announcement id " + id + " does not exist, Can not delete !"));
         announcementRepository.deleteById(id);
     }
 
@@ -83,29 +87,36 @@ public class AnnouncementService {
 
 
     public Page<Announcement> getPages(Integer page, Integer size,String mode,Integer category){
+        page= page!=null?page:0 ;
+        size=size!=null?size:size(getAnnouncements(null));
         Pageable pageable = PageRequest.of(page,size);
         LocalDateTime localNow = LocalDateTime.now();
         if( category != null && mode != null){
-            if(mode.toLowerCase().equals("active")){
+            if(mode.equalsIgnoreCase("active")){
                 return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")),category,pageable);
             }
-            else {
+            else if (mode.equalsIgnoreCase("close")) {
                 return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),category,pageable) ;
+            }
+            else {
+                throw new  ResponseStatusException(HttpStatus.NOT_FOUND,"Not Found : "+mode+"mode .");
             }
         }
        else if(category != null && mode==null) {
             return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(category,pageable) ;
         }
        else if(category==null && mode!=null){
-           if(mode.toLowerCase().equals("active")){
+           if(mode.equalsIgnoreCase("active")){
               return  announcementRepository.findAnnouncementByValidateDatetimePage(localNow.atZone(ZoneId.of("UTC")),pageable);
            }
-           else {
+           else if (mode.equalsIgnoreCase("close")) {
                return  announcementRepository.findAnnouncementByCloseDateAfterNowPage(localNow.atZone(ZoneId.of("UTC")),pageable);
+           }
+           else {
+               throw new  ResponseStatusException(HttpStatus.NOT_FOUND,"Not Found : "+mode+"mode .");
            }
         }
         else{
-
             return announcementRepository.findAll(pageable);
         }
 

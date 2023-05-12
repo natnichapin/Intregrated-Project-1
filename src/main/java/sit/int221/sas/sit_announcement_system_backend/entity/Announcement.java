@@ -23,19 +23,14 @@ public class Announcement {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name="announcementTitle", nullable = false,length = 200)
-    @NotNull(message = "announcementTitle not null")
-    @Max(200)
     private String announcementTitle;
     @Column(name="announcementDescription", nullable = false,length = 10000)
-    @NotNull(message = "announcementDescription not null")
-    @Max(10000)
 
     private String announcementDescription;
 
 
     @ManyToOne
     @JoinColumn(name = "announcementCategory",nullable =false)
-    @NotNull(message = "categoryId not null")
     private Category announcementCategory ;
 //    public String getAnnouncementCategory(){
 
