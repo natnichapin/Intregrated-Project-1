@@ -24,4 +24,8 @@ public class CategoryService {
     public Category addCategory(Category category){
         return categoryRepository.saveAndFlush(category);
     }
+
+    public void deleteCategory(Integer categoryId){
+         categoryRepository.deleteById(categoryId);
+    }
 }

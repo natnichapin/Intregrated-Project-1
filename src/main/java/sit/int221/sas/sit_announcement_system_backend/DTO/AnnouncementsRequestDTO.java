@@ -1,6 +1,7 @@
 package sit.int221.sas.sit_announcement_system_backend.DTO;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;

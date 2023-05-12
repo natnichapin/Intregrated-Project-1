@@ -4,28 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsRequestDTO;
-import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsResponseDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.repository.AnnouncementRepository;
 import sit.int221.sas.sit_announcement_system_backend.repository.CategoryRepository;
-import sit.int221.sas.sit_announcement_system_backend.repository.PagingAnnouncementRepository;
-import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.*;
 
 @Service
 public class AnnouncementService {
-    @Autowired
-    private PagingAnnouncementRepository pagingAnnouncementRepository ;
+
     @Autowired
     private AnnouncementRepository announcementRepository;
     @Autowired
@@ -88,21 +81,21 @@ public class AnnouncementService {
     }
 
 
-    public Page<Announcement> getPages(Integer page, Integer pageSize,String mode,Integer id){
-        Pageable pageable = PageRequest.of(page,pageSize);
+    public Page<Announcement> getPages(Integer page, Integer size,String mode,Integer category){
+        Pageable pageable = PageRequest.of(page,size);
         LocalDateTime localNow = LocalDateTime.now();
-        if( id != null && mode != null){
+        if( category != null && mode != null){
             if(mode.toLowerCase().equals("active")){
-                return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable);
+                return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")),category,pageable);
             }
             else {
-                return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable) ;
+                return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),category,pageable) ;
             }
         }
-       else if(id != null && mode==null) {
-            return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(id,pageable) ;
+       else if(category != null && mode==null) {
+            return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(category,pageable) ;
         }
-       else if(id==null && mode!=null){
+       else if(category==null && mode!=null){
            if(mode.toLowerCase().equals("active")){
               return  announcementRepository.findAnnouncementByValidateDatetimePage(localNow.atZone(ZoneId.of("UTC")),pageable);
            }

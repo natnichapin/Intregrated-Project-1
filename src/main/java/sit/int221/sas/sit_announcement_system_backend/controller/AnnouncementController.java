@@ -1,6 +1,7 @@
 package sit.int221.sas.sit_announcement_system_backend.controller;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,19 +57,19 @@ public class AnnouncementController<T> {
     }
     @GetMapping("/pages")
     public ResponseEntity<PageDto> getAnnouncementPage (@RequestParam (defaultValue = "0")Integer page,
-                                        @RequestParam (defaultValue = "5") Integer pageSize,
+                                        @RequestParam (defaultValue = "5") Integer size,
                                         @RequestParam (required = false) String mode,
-                                        @RequestParam (required = false) Integer id){
+                                        @RequestParam (required = false) Integer category){
         if( mode != null ){
             if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ) {
-                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), UserAnnouncementsResponseDTO.class, modelMapper));
+                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
             }
             else {
-                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), AnnouncementsResponseDTO.class, modelMapper));
+                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
             }
             }
         else {
-            return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), AnnouncementsResponseDTO.class, modelMapper));
+            return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
         }
     }
 
@@ -76,7 +77,7 @@ public class AnnouncementController<T> {
 
 
     @PostMapping("")
-    public ResponseEntity<AnnouncementsResponsehaveidDTO> createAnnouncement(@RequestBody AnnouncementsRequestDTO announcementDTO){
+    public ResponseEntity<AnnouncementsResponsehaveidDTO> createAnnouncement(@Valid @RequestBody AnnouncementsRequestDTO announcementDTO){
 
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.createAnnoucement(announcementDTO), AnnouncementsResponsehaveidDTO.class));
     }
@@ -87,7 +88,7 @@ public class AnnouncementController<T> {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnnouncementsResponseDetailDTO> updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementsRequestDTO announcmentDTO){
+    public ResponseEntity<AnnouncementsResponseDetailDTO> updateAnnouncement(@PathVariable Integer id,@Valid @RequestBody AnnouncementsRequestDTO announcmentDTO){
         return  ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.updateAnnouncement(id,announcmentDTO), AnnouncementsResponseDetailDTO.class));
 
     }
