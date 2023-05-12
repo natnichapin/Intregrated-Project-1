@@ -16,20 +16,22 @@ import java.time.ZonedDateTime;
 public class AnnouncementsResponsehaveidDTO {
     private Integer id;
     private String announcementTitle;
-    private String announcementDescription ;
+    private String announcementDescription;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
     //แปลง String จาก DB ได้
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
     @JsonIgnore
-    @Column(name="announcementCategory")
-    private Category category ;
-    public Integer getCategoryId(){
+    @Column(name = "announcementCategory")
+    private Category category;
+
+    public Integer getCategoryId() {
         return category.getCategoryId();
     }
-    public String getAnnouncementCategory(){
-        return category.getCategoryName() ;
+
+    public String getAnnouncementCategory() {
+        return category.getCategoryName();
     }
 
 }

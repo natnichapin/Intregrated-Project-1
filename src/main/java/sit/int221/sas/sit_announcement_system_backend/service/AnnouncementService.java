@@ -4,28 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsRequestDTO;
-import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsResponseDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
 import sit.int221.sas.sit_announcement_system_backend.repository.AnnouncementRepository;
 import sit.int221.sas.sit_announcement_system_backend.repository.CategoryRepository;
 import sit.int221.sas.sit_announcement_system_backend.repository.PagingAnnouncementRepository;
-import sit.int221.sas.sit_announcement_system_backend.utils.AnnouncementDisplay;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.*;
+import java.util.List;
 
 @Service
 public class AnnouncementService {
     @Autowired
-    private PagingAnnouncementRepository pagingAnnouncementRepository ;
+    private PagingAnnouncementRepository pagingAnnouncementRepository;
     @Autowired
     private AnnouncementRepository announcementRepository;
     @Autowired
@@ -33,15 +28,14 @@ public class AnnouncementService {
 
     public List<Announcement> getAnnouncements(String mode) {
         LocalDateTime localNow = LocalDateTime.now();
-        if( mode != null) {
-            if (mode.toLowerCase().equals("active")) {
+        if (mode != null) {
+            if (mode.equalsIgnoreCase("active")) {
                 return announcementRepository.findAnnouncementByValidateDatetimeList(localNow.atZone(ZoneId.of("UTC")));
             } else {
                 return announcementRepository.findAnnouncementByCloseDateAfterNowList(localNow.atZone(ZoneId.of("UTC")));
             }
-        }
-        else {
-           return    announcementRepository.findAllByOrderByIdDesc();
+        } else {
+            return announcementRepository.findAllByOrderByIdDesc();
         }
 
 
@@ -49,15 +43,16 @@ public class AnnouncementService {
 
 
     public Announcement getAnnouncementById(Integer announcementid) {
-        return announcementRepository.findById(announcementid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Announcement id"+announcementid+ " does not exist"));
+        return announcementRepository.findById(announcementid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id" + announcementid + " does not exist"));
     }
-    public Announcement createAnnoucement(AnnouncementsRequestDTO announcementDTO){
+
+    public Announcement createAnnoucement(AnnouncementsRequestDTO announcementDTO) {
         Announcement announcement = new Announcement();
         return getAnnouncement(announcementDTO, announcement);
     }
 
-    public void deleteAnnouncement(Integer id){
-        announcementRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND," Announcement id" +id + " does not exist, Can not delete !")) ;
+    public void deleteAnnouncement(Integer id) {
+        announcementRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, " Announcement id" + id + " does not exist, Can not delete !"));
         announcementRepository.deleteById(id);
     }
 
@@ -65,11 +60,10 @@ public class AnnouncementService {
     public Announcement updateAnnouncement(Integer id, AnnouncementsRequestDTO announcement) {
         try {
             Announcement existAnnouncement = announcementRepository.findById(id).orElseThrow(
-                    ()->new   ResponseStatusException(HttpStatus.NOT_FOUND,"Announcement id" +id + " does not exist, Can not update !"));
-            return    getAnnouncement(announcement, existAnnouncement);
-        }
-        catch (RuntimeException e) {
-         throw new RuntimeException(e);
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id" + id + " does not exist, Can not update !"));
+            return getAnnouncement(announcement, existAnnouncement);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -80,44 +74,38 @@ public class AnnouncementService {
         RealAnnouncement.setAnnouncementDescription(announcement.getAnnouncementDescription());
         RealAnnouncement.setPublishDate(announcement.getPublishDate());
         RealAnnouncement.setCloseDate(announcement.getCloseDate());
-        if(announcement.getAnnouncementDisplay()!=null){
+        if (announcement.getAnnouncementDisplay() != null) {
             RealAnnouncement.setAnnouncementDisplay(announcement.getAnnouncementDisplay());
         }
-        RealAnnouncement.setAnnouncementCategory(categoryRepository.findById(announcement.getCategoryId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Category id" +announcement.getCategoryId()+" does not exist, Can not update !")));
-        return  announcementRepository.saveAndFlush(RealAnnouncement);
+        RealAnnouncement.setAnnouncementCategory(categoryRepository.findById(announcement.getCategoryId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category id" + announcement.getCategoryId() + " does not exist, Can not update !")));
+        return announcementRepository.saveAndFlush(RealAnnouncement);
     }
 
 
-    public Page<Announcement> getPages(Integer page, Integer pageSize,String mode,Integer id){
-        Pageable pageable = PageRequest.of(page,pageSize);
+    public Page<Announcement> getPages(Integer page, Integer pageSize, String mode, Integer id) {
+        Pageable pageable = PageRequest.of(page, pageSize);
         LocalDateTime localNow = LocalDateTime.now();
-        if( id != null && mode != null){
-            if(mode.toLowerCase().equals("active")){
-                return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable);
+        if (id != null && mode != null) {
+            if (mode.equalsIgnoreCase("active")) {
+                return announcementRepository.findAnnouncementByValidateDatetimePageWithId(localNow.atZone(ZoneId.of("UTC")), id, pageable);
+            } else {
+                return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")), id, pageable);
             }
-            else {
-                return announcementRepository.findAnnouncementByCloseDateAfterNowPageWithId(localNow.atZone(ZoneId.of("UTC")),id,pageable) ;
+        } else if (id != null && mode == null) {
+            return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(id, pageable);
+        } else if (id == null && mode != null) {
+            if (mode.equalsIgnoreCase("active")) {
+                return announcementRepository.findAnnouncementByValidateDatetimePage(localNow.atZone(ZoneId.of("UTC")), pageable);
+            } else {
+                return announcementRepository.findAnnouncementByCloseDateAfterNowPage(localNow.atZone(ZoneId.of("UTC")), pageable);
             }
-        }
-       else if(id != null && mode==null) {
-            return announcementRepository.findAnnouncementByAnnouncementCategory_CategoryIdOrderByIdDesc(id,pageable) ;
-        }
-       else if(id==null && mode!=null){
-           if(mode.toLowerCase().equals("active")){
-              return  announcementRepository.findAnnouncementByValidateDatetimePage(localNow.atZone(ZoneId.of("UTC")),pageable);
-           }
-           else {
-               return  announcementRepository.findAnnouncementByCloseDateAfterNowPage(localNow.atZone(ZoneId.of("UTC")),pageable);
-           }
-        }
-        else{
+        } else {
             return announcementRepository.findAll(pageable);
         }
 
     }
 
 }
-
 
 
 // if(mode != null){
