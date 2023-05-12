@@ -26,7 +26,7 @@ public class AnnouncementController<T> {
     @GetMapping("")
     public ResponseEntity<List<AnnouncementsResponseDTO>> getAnnouncements(@RequestParam (required = false) String mode ) {
         if( mode != null){
-            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ){
+            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("closed") ){
                 return ResponseEntity.status(HttpStatus.OK).body( listMapper.mapList(announcementService.getAnnouncements(mode),AnnouncementsResponseDTO.class, modelMapper));
             }
             throw new RuntimeException();
@@ -60,7 +60,7 @@ public class AnnouncementController<T> {
                                         @RequestParam (required = false) String mode,
                                         @RequestParam (required = false) Integer id){
         if( mode != null ){
-            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ) {
+            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("closed") ) {
                 return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, pageSize, mode, id), UserAnnouncementsResponseDTO.class, modelMapper));
             }
             else {
