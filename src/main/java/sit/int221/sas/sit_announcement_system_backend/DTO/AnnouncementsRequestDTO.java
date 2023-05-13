@@ -1,6 +1,7 @@
 package sit.int221.sas.sit_announcement_system_backend.DTO;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
