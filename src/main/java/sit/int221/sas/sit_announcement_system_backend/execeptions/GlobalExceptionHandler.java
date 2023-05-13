@@ -16,7 +16,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleFileNotFound(MethodArgumentNotValidException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleValidateError(MethodArgumentNotValidException ex, WebRequest request) {
         ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 request.getDescription(false));
         ex.getBindingResult().getAllErrors().forEach((error) -> {

@@ -35,11 +35,12 @@ public class AnnouncementsRequestDTO {
 
     @Column(name = "announcementDisplay", nullable = true)
     @Enumerated(EnumType.STRING)
+
     @NotNull(message = "can not be null")
     @CheckDisplay
     private String announcementDisplay;
     public AnnouncementDisplay getAnnouncementDisplay() {
-        return AnnouncementDisplay.valueOf(announcementDisplay);
+      return AnnouncementDisplay.valueOf(announcementDisplay);
     }
     @Column(name = "announcementCategory", nullable = false)
     @NotNull(message = "can not be null")
