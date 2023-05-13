@@ -14,34 +14,34 @@ import java.time.ZonedDateTime;
 
 @Getter
 @Setter
-@CloseDateAfterPublishDate
+//@CloseDateAfterPublishDate
 
 public class AnnouncementsRequestDTO {
     @Column(name = "announcementTitle", nullable = false)
-    @NotNull(message = "can not be null")
-    @Size(max = 200)
+//    @NotNull(message = "can not be null")
+//    @Size(max = 200)
     private String announcementTitle;
     @Column(name = "announcementDescription", nullable = false)
-    @NotNull(message = "can not be null")
-    @Size(max = 10000)
+//    @NotNull(message = "can not be null")
+//    @Size(max = 10000)
     private String announcementDescription;
     @Column(name = "publishDate", nullable = true)
-    @FutureOrPresent
+//    @FutureOrPresent
     private ZonedDateTime publishDate;
     @Column(name = "closeDate", nullable = true)
-    @Future
+//    @Future
     private ZonedDateTime closeDate;
     //แปลง String จาก DB ได้
 
     @Column(name = "announcementDisplay", nullable = true)
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "can not be null")
-    @CheckDisplay
+//    @NotNull(message = "can not be null")
+//    @CheckDisplay
     private String announcementDisplay;
     public AnnouncementDisplay getAnnouncementDisplay() {
         return AnnouncementDisplay.valueOf(announcementDisplay);
     }
     @Column(name = "announcementCategory", nullable = false)
-    @NotNull(message = "can not be null")
+//    @NotNull(message = "can not be null")
     private Integer categoryId;
 }

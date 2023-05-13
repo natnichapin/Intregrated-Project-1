@@ -55,10 +55,11 @@ public class AnnouncementController<T> {
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.getAnnouncementById(id), AnnouncementsResponseDetailDTO.class));
     }
 
+
     @GetMapping("/pages")
 
-    public ResponseEntity<PageDto> getAnnouncementPage (@RequestParam (required = false)Integer page,
-                                        @RequestParam (required = false) Integer size,
+    public ResponseEntity<PageDto> getAnnouncementPage (@RequestParam (defaultValue = "0")Integer page,
+                                        @RequestParam (defaultValue = "5") Integer size,
                                         @RequestParam (required = false) String mode,
                                         @RequestParam (required = false) Integer category){
         if( mode != null ){

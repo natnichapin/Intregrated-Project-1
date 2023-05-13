@@ -87,8 +87,8 @@ public class AnnouncementService {
 
 
     public Page<Announcement> getPages(Integer page, Integer size,String mode,Integer category){
-        page= page!=null?page:0 ;
-        size=size!=null?size:size(getAnnouncements(null));
+//        page= page!=null?page:0 ;
+//        size=size!=null?size:size(getAnnouncements(null));
         Pageable pageable = PageRequest.of(page,size);
         LocalDateTime localNow = LocalDateTime.now();
         if( category != null && mode != null){
