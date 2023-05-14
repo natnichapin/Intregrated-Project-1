@@ -1,9 +1,7 @@
 package sit.int221.sas.sit_announcement_system_backend.DTO;
 
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,12 +17,15 @@ import java.time.ZonedDateTime;
 
 public class AnnouncementsRequestDTO {
     @Column(name = "announcementTitle", nullable = false)
-   @NotNull(message = "can not be null")
-    @Size(max = 200)
+
+    @NotNull(message = "must not be null")
+    @NotBlank(message = "must not be blank")
+    @Size(min = 1, max = 200)
     private String announcementTitle;
     @Column(name = "announcementDescription", nullable = false)
-   @NotNull(message = "can not be null")
-    @Size(max = 10000)
+    @NotNull(message = "must not be null")
+    @NotBlank(message = "must not be blank")
+    @Size(min = 1, max = 10000)
     private String announcementDescription;
     @Column(name = "publishDate", nullable = true)
     @FutureOrPresent
@@ -37,6 +38,7 @@ public class AnnouncementsRequestDTO {
     @Column(name = "announcementDisplay", nullable = true)
     @Enumerated(EnumType.STRING)
 
+
     @NotNull(message = "can not be null")
     @CheckDisplay
     private String announcementDisplay;
@@ -44,6 +46,6 @@ public class AnnouncementsRequestDTO {
       return AnnouncementDisplay.valueOf(announcementDisplay);
     }
     @Column(name = "announcementCategory", nullable = false)
-    @NotNull(message = "can not be null")
+    @NotNull(message = "must not be null")
     private Integer categoryId;
 }

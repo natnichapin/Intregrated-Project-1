@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,12 +21,20 @@ public class GlobalExceptionHandler {
         ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 request.getDescription(false));
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = error.getObjectName();
+            //String fieldName = error.getObjectName();
+            String fieldName = error.getArguments()[error.getArguments().length-1].toString();
             if (error instanceof FieldError)  fieldName = ((FieldError) error).getField();
-
             String errorMessage = error.getDefaultMessage();
             er.addValidationError(fieldName, errorMessage);
         });
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+    }
+
+    @ExceptionHandler(CustomException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleNullPointer (CustomException e,WebRequest request){
+        ErrorResponse er = new ErrorResponse(HttpStatus.NOT_FOUND.value(),e.getMessage(),request.getDescription(false)) ;
+        er.addValidationError(e.getAdditionalField1(),e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
     }
 

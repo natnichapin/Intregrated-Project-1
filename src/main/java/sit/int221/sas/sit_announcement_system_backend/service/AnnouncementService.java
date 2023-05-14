@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.sas.sit_announcement_system_backend.DTO.AnnouncementsRequestDTO;
 import sit.int221.sas.sit_announcement_system_backend.entity.Announcement;
+import sit.int221.sas.sit_announcement_system_backend.execeptions.CustomException;
 import sit.int221.sas.sit_announcement_system_backend.repository.AnnouncementRepository;
 import sit.int221.sas.sit_announcement_system_backend.repository.CategoryRepository;
 
@@ -80,7 +81,7 @@ public class AnnouncementService {
         if (announcement.getAnnouncementDisplay() != null) {
             RealAnnouncement.setAnnouncementDisplay(announcement.getAnnouncementDisplay());
         }
-        RealAnnouncement.setAnnouncementCategory(categoryRepository.findById(announcement.getCategoryId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category id" + announcement.getCategoryId() + " does not exist, Can not update !")));
+        RealAnnouncement.setAnnouncementCategory(categoryRepository.findById(announcement.getCategoryId()).orElseThrow(()->new CustomException("does not exists","categoryId")));
         return announcementRepository.saveAndFlush(RealAnnouncement);
     }
 

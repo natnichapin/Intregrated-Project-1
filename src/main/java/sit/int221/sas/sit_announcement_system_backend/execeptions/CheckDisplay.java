@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckDisplay {
-    String message() default "must be 'Y' or 'N' ";
+    String message() default "must be either 'Y' or 'N'";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

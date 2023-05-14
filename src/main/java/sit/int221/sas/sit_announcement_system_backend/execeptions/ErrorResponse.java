@@ -20,13 +20,13 @@ public class ErrorResponse {
     private final String message;
     private final String instance;
     private String stackTrace;
-    private List<ValidationError> errors;
+    private List<ValidationError> detail;
 
     public void addValidationError(String field, String message) {
-        if (Objects.isNull(errors)) {
-            errors = new ArrayList<>();
+        if (Objects.isNull(detail)) {
+            detail = new ArrayList<>();
         }
-        errors.add(new ValidationError(field, message));
+        detail.add(new ValidationError(field, message));
     }
 
     @Getter
