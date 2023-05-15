@@ -114,11 +114,11 @@ public class AnnouncementService {
                return  announcementRepository.findAnnouncementByCloseDateAfterNowPage(localNow.atZone(ZoneId.of("UTC")),pageable);
            }
            else {
-               throw new  ResponseStatusException(HttpStatus.NOT_FOUND,"Not Found : "+mode+"mode .");
+               throw new CustomException("Not Found : "+mode+"mode .","categoryId");
            }
         }
         else{
-            return announcementRepository.findAll(pageable);
+            return announcementRepository.findAllByOrderByIdDesc(pageable);
         }
 
     }

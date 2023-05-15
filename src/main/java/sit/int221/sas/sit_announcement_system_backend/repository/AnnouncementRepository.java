@@ -41,6 +41,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 
 
     List<Announcement> findAllByOrderByIdDesc();
+    Page<Announcement> findAllByOrderByIdDesc(Pageable page);
+
 
     List<Announcement> findByAnnouncementDisplayOrderByIdDesc(AnnouncementDisplay Display); //เปิด
 
