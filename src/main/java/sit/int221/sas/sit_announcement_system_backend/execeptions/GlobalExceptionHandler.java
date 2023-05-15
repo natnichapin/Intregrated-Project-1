@@ -18,8 +18,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleValidateError(MethodArgumentNotValidException ex, WebRequest request) {
-        ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
-                request.getDescription(false));
+        ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), request.getDescription(false));
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             //String fieldName = error.getObjectName();
             String fieldName = error.getArguments()[error.getArguments().length-1].toString();
