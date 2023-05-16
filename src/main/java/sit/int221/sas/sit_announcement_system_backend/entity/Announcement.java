@@ -49,8 +49,7 @@ public class Announcement {
     public Announcement() {
         this.announcementDisplay = AnnouncementDisplay.N;
     }
-
-    @Column(name = "viewCount", nullable = true)
-    private Integer viewCount;
+    @Column(name = "viewCount", insertable = false)
+    private Integer viewCount ;
 
 }
