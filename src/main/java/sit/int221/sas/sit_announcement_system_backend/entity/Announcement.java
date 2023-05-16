@@ -50,5 +50,7 @@ public class Announcement {
         this.announcementDisplay = AnnouncementDisplay.N;
     }
 
+    @Column(name = "viewCount", nullable = true)
+    private Integer viewCount;
 
 }

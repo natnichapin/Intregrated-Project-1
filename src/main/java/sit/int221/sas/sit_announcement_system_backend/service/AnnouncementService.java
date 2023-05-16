@@ -122,7 +122,12 @@ public class AnnouncementService {
         }
 
     }
-
+    public Integer updateViewCount(Integer id){
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(()->new CustomException("does not exists","announcementId"));
+        announcement.setViewCount(announcement.getViewCount()+1);
+        announcementRepository.saveAndFlush(announcement);
+        return announcement.getViewCount();
+    }
 }
 
 

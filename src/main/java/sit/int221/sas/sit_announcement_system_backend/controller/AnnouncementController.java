@@ -1,6 +1,5 @@
 package sit.int221.sas.sit_announcement_system_backend.controller;
 
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -94,5 +93,8 @@ public class AnnouncementController<T> {
         return  ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.updateAnnouncement(id,announcmentDTO), AnnouncementsResponseDetailDTO.class));
 
     }
-
+    @PutMapping("/{id}/views")
+    public ResponseEntity<Integer> updateAnnouncementViews(@PathVariable Integer id){
+        return  ResponseEntity.status(HttpStatus.OK).body(announcementService.updateViewCount(id));
+    }
 }

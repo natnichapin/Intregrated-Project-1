@@ -52,4 +52,5 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 
 
     // List<Announcement> findAllByAnnouncementCategory_Category_IdDesc() ;
+
 }
