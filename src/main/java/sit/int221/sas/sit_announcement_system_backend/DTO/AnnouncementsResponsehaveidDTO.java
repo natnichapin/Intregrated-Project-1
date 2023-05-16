@@ -33,5 +33,5 @@ public class AnnouncementsResponsehaveidDTO {
     public String getAnnouncementCategory() {
         return category.getCategoryName();
     }
-
+    private Integer viewCount;
 }

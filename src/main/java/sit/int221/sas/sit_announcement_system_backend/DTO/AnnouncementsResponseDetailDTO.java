@@ -19,5 +19,5 @@ public class AnnouncementsResponseDetailDTO {
     @Enumerated(EnumType.STRING)
     private AnnouncementDisplay announcementDisplay;
     private String announcementCategory;
-
+    private Integer viewCount;
 }
