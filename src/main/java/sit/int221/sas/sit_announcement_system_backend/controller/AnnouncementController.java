@@ -50,7 +50,11 @@ public class AnnouncementController<T> {
     }*/
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnnouncementsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id) {
+    public ResponseEntity<AnnouncementsResponseDetailDTO> getAnnouncementById(@PathVariable Integer id,
+                                                                               @RequestParam(defaultValue = "false") Boolean count) {
+        if (count) {
+            announcementService.updateViewCount(id);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.getAnnouncementById(id), AnnouncementsResponseDetailDTO.class));
     }
 
@@ -93,8 +97,8 @@ public class AnnouncementController<T> {
         return  ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(announcementService.updateAnnouncement(id,announcmentDTO), AnnouncementsResponseDetailDTO.class));
 
     }
-    @PutMapping("/{id}/views")
-    public ResponseEntity<Integer> updateAnnouncementViews(@PathVariable Integer id){
-        return  ResponseEntity.status(HttpStatus.OK).body(announcementService.updateViewCount(id));
-    }
+//    @PutMapping("/{id}/views")
+//    public ResponseEntity<Integer> updateAnnouncementViews(@PathVariable Integer id){
+//        return  ResponseEntity.status(HttpStatus.OK).body(announcementService.updateViewCount(id));
+//    }
 }
