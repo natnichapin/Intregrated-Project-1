@@ -28,11 +28,11 @@ public class AnnouncementController<T> {
 
     @GetMapping("")
     public ResponseEntity<List<AnnouncementsResponseDTO>> getAnnouncements(@RequestParam(required = false) String mode) {
-        if (mode != null && (mode.equalsIgnoreCase("active") || mode.equalsIgnoreCase("close"))) {
+//        if (mode != null && (mode.equalsIgnoreCase("active") || mode.equalsIgnoreCase("close"))) {
                 return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode), AnnouncementsResponseDTO.class, modelMapper));
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode), AnnouncementsResponseDTO.class, modelMapper));
-        }
+//        } else {
+//            return ResponseEntity.status(HttpStatus.OK).body(listMapper.mapList(announcementService.getAnnouncements(mode), AnnouncementsResponseDTO.class, modelMapper));
+//        }
 
     }
 
@@ -65,18 +65,18 @@ public class AnnouncementController<T> {
                                         @RequestParam (defaultValue = "5") Integer size,
                                         @RequestParam (required = false) String mode,
                                         @RequestParam (required = false) Integer category){
-        if( mode != null ){
-            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ) {
-                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
-            }
-            }
-        else {
+//        if( mode != null ){
+//            if(mode.toLowerCase().equals("active")||mode.toLowerCase().equals("close") ) {
+//                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
+//            }
+//            else {
+//                return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
+//            }
+//            }
+//        else {
             return ResponseEntity.status(HttpStatus.OK).body(listMapper.toPageDTO(announcementService.getPages(page, size, mode, category), AnnouncementsResponseDTO.class, modelMapper));
 
-        }
+//        }
     }
 
 
